@@ -59,7 +59,7 @@ project-name/
 
 ## Contributors
 - **Alexander Ingles** - BCIT CST Student with a passion for creating user-friendly applications. Fun fact: Makes drones and robots as a hobby.
-- **Teammate Name** - BCIT CST Student, Frontend enthusiast with a knack for creative design. Fun fact: Has a collection of over 50 houseplants.
+- **Elise Kowalski** - BCIT CST Student with a passion for creating user-friendly applications. Fun fact: Plays the guitar.
 
 ---
 
