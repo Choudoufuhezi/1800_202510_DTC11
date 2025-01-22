@@ -59,6 +59,7 @@ project-name/
 
 ## Contributors
 - **Alexander Ingles** - BCIT CST Student with a passion for creating user-friendly applications. Fun fact: Makes drones and robots as a hobby.
+- **Hank Zhao** - Current BCIT CST student, graduated from UBC in 2024, strong passion in data science and psychology. Fun fact: used to play accordion.
 - **Elise Kowalski** - BCIT CST Student with a passion for creating user-friendly applications. Fun fact: Plays the guitar.
 
 ---
