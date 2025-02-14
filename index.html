@@ -31,9 +31,14 @@
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=add_box" />
+    <style>
+        .card {
+            margin-top: 25px;
+        }
+    </style>
 </head>
 
-<body style="min-height: 100vh; display: flex; flex-direction: column;">
+<body style="flex-direction: column;">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Tracky</a>
@@ -55,7 +60,7 @@
 
         <!-- Hero -->
         <div class="p-5 text-center bg-body-tertiary"
-            style="background-image: url('https://images-ext-1.discordapp.net/external/4BCrXC4M0xz6FGytouBBU9nh9iiCXvtE2o-Il_GrIh8/https/img.freepik.com/premium-photo/blank-calendar-blue-background-template-copy-space-text-mockup_188237-2712.jpg?format=webp&width=1252&height=796'); background-repeat: no-repeat; background-position: center; background-size: cover;  margin-bottom: 25px;">
+            style="background-image: url('https://images-ext-1.discordapp.net/external/4BCrXC4M0xz6FGytouBBU9nh9iiCXvtE2o-Il_GrIh8/https/img.freepik.com/premium-photo/blank-calendar-blue-background-template-copy-space-text-mockup_188237-2712.jpg?format=webp&width=1252&height=796'); background-repeat: no-repeat; background-position: center; background-size: cover;">
             <h1 class="mb-3">Tracky</h1>
             <h4 class="mb-3">Has your backy</h4>
             <a data-mdb-ripple-init class="btn btn-primary" href="login.html" role="button">Login</a>
@@ -66,19 +71,21 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="card-body" style="background-color: #5FC08B;">
+                        <h5 class="card-title">Get your tasks done ahead of time!</h5>
+                        <p class="card-text">Add soft deadlines to any task your working on, or the steps youve added to
+                            them!</p>
+                        <a href="#" class="btn btn-primary">Read more!</a>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="card-body" style="background-color: #5FC08B;">
+                        <h5 class="card-title">Break your task down!</h5>
+                        <p class="card-text">We will help you transform your tasks into more managable steps! to ease
+                            your daily workload!</p>
+                        <a href="#" class="btn btn-primary">Learn more!</a>
                     </div>
                 </div>
             </div>
@@ -86,26 +93,27 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="card-body" style="background-color: #5FC08B;">
+                        <h5 class="card-title">Push forwards!</h5>
+                        <p class="card-text">Tasky knows when your tasks are due so you can safely push tasks forwards!
+                        </p>
+                        <a href="#" class="btn btn-primary">Explore more!</a>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="card-body" style="background-color: #5FC08B;">
+                        <h5 class="card-title">Get updates!</h5>
+                        <p class="card-text">Let us remember for you, we will let you know on your schedule when to
+                            schedule!</p>
+                        <a href="#" class="btn btn-primary">Find more!</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 fixed-bottom mb-0"
-        style="margin-top: auto;">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-0" style="margin-top: 25px;">
         <p class="col-md-4 mb-0 text-mut">&copy; 2025 BCIT COMP1800</p>
         <a href="/"
             class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
