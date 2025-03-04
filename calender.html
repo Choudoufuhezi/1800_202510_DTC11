@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Show Schedule</title>
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .calendar {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+
+        .calendar th,
+        .calendar td {
+            border: 1px solid #444;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .calendar th {
+            background-color: #222;
+        }
+
+        .event {
+            background-color: #1E3A8A;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .month-year {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Movie Show Schedule</h1>
+    <div class="month-year">March 2025</div>
+    <table class="calendar">
+        <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>4</td>
+            <td>
+                <div class="event">Night Horror<br>1:00 PM - 3:00 PM</div>
+            </td>
+            <td>
+                <div class="event">Romantic Sunday<br>7:10 AM - 10:00 AM</div>
+                <div class="event">Evening Movie<br>9:00 PM - 9:00 PM</div>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <div class="event">Evening Movie<br>9:00 PM - 9:00 PM</div>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</body>
+
+</html>
