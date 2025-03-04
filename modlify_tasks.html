@@ -8,6 +8,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="code.js"></script>
 
 <body style="flex-direction: column;">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -30,22 +32,22 @@
 </body>
 
 <body>
-    <div class="border border-primary">
+    <div class="border border-primary m-2 p-2">
         <p>Task 1</p>
         <p>User description here: </p>
         <input>
     </div>
-    <div>
+    <div class="m-2 p-2">
         <p>Steps:</p>
         <div class="d-flex justify-content-evenly gap-1 mb-5">
             <a href="#" class="border border-primary p-2 px-5">Add</a>
             <a href="#" class="border border-primary p-2 px-5">Remove</a>
         </div>
     </div>
-    <div>
+    <div class="m-2 p-2">
         <p class="border border-primary text-center">Push Forward</p>
         <div class="d-flex justify-content-evenly">
-            <a href="#" class="border rounded-circle border-primary p-2">a week</a>
+            <a href="#" class="border rounded-circle border-primary p-2" id="week">a week</a>
             <a href="#" class="border rounded-circle border-primary p-2">a day</a>
             <a href="#" class="border rounded-circle border-primary p-2">an hour</a>
         </div>
@@ -85,3 +87,5 @@
         </a>
     </div>
 </footer>
+
+</html>
