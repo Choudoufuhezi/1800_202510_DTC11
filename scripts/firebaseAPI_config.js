@@ -1,27 +1,21 @@
 //----------------------------------------
 //  Your web app's Firebase configuration
 //----------------------------------------
+// Import the functions you need from the SDKs you need
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
-
-    apiKey: "AIzaSyCmxU5QmPY_5UEF9cLcfXjU6lu8GlQgqhg",
-
-    authDomain: "comp1800-202510-demo-e.firebaseapp.com",
-
-    projectId: "comp1800-202510-demo-e",
-
-    storageBucket: "comp1800-202510-demo-e.firebasestorage.app",
-
-    messagingSenderId: "798025107088",
-
-    appId: "1:798025107088:web:15e00df1d2c58267003a15"
-
+    apiKey: "AIzaSyC0-ALde5u3T3ydU6G1Gf4pgTkzmSLk6d4",
+    authDomain: "trackywebapp.firebaseapp.com",
+    projectId: "trackywebapp",
+    storageBucket: "trackywebapp.firebasestorage.app",
+    messagingSenderId: "1041760049730",
+    appId: "1:1041760049730:web:0dc9ab499077b202276bdb"
 };
 
-
-//--------------------------------------------
-// initialize the Firebase app
-// initialize Firestore database if using it
-//--------------------------------------------
-const app = firebase.initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 const db = firebase.firestore();
 

@@ -12,6 +12,10 @@
         crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="code.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="scripts/firebaseAPI_config.js"></script>
 </head>
 
 <body>
@@ -34,14 +38,15 @@
     <h1 class="mx-4">Add Your Task</h1>
     <div class="border border-primary m-4 card" style="background-color: #CAE9F5;" id="createTask">
         <h1>Task Title</h1>
-        <input type="text">
+        <input type="text" id="tasktitle">
 
         <h1>Task Description</h1>
-        <input type="text" style="height: 35dvw;">
+        <input type="text" style="height: 35dvw;" id="taskdesc">
         <h1>Add Due Date</h1>
-        <input type="date">
+        <input type="date" id="taskdate">
     </div>
-    <input type="submit" class="mx-4">
+    <input type="submit" class="mx-4" id="submit">
+
     <footer class="flex-wrap justify-content-between py-3 mt-5 fixed-bottom mb-0"
         style="margin-top: auto; background-color: white;">
         <div class="navbar mb-0 fixed-bottom justify-content-evenly" style="justify-content: center;">
@@ -75,6 +80,7 @@
             </a>
         </div>
     </footer>
+    <script src="scripts/add_task.js"></script>
 </body>
 
 </html>
