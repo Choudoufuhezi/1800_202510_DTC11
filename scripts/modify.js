@@ -19,6 +19,24 @@ async function load_tasks(taskid) {
         });
 }
 
+async function save_task(taskid) {
+    const taskRef = db.collection("tasks").doc(taskid);
+
+    const name = document.getElementById("task_name_text").value;
+    const description = document.getElementById("description_text").value;
+
+    await taskRef.update({
+        name: name,
+        description: description
+    })
+        .then(() => {
+            console.log("Task updated successfully!");
+        })
+        .catch(error => {
+            console.error("Error updating task: ", error);
+        });
+}
+
 
 load_tasks(taskId);
 

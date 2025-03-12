@@ -22,6 +22,8 @@
     crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="scripts/script.js"></script>
+<script src="scripts/firebaseAPI_config.js"></script>
+<script src="scripts/modify.js"></script>
 <style>
     .card {
         margin-top: 25px;
@@ -53,18 +55,18 @@
 </body>
 
 <section class="md:mx-5px py-5">
-    <div class="border border-primary m-4 p-2 card" style="background-color: #CAE9F5;">
-        <h1 class="card-title">Task name:</h1>
-        <form class="d-flex flex-column" id="task_name">
+    <div id="task_info" class="border border-primary m-4 p-2 card" style="background-color: #CAE9F5;" disabled>
+        <fieldset id="task_info">
+            <h1 class="card-title">Task name:</h1>
             <input type="text" id="task_name_text" required>
-            <input type="submit" class="w-25" value="rename">
-        </form>
-        <br></br>
-        <h2 class="card-title">User description here: </h2>
-        <form class="d-flex flex-column" id="description">
+            <br></br>
+            <h2 class="card-title">User description here: </h2>
             <input type="text" id="description_text" required>
-            <input type="submit" class="w-25" value="change description">
-        </form>
+        </fieldset>
+        <div class="d-flex justify-content-end mt-5">
+            <span style="width: 10px"></span>
+            <button type="button" class="btn btn-info" onclick="save_task(taskId)">Save</button>
+        </div>
     </div>
     <div class="border border-primary m-4 p-2 card" style="background-color: #CAE9F5;">
         <h1 class="card-title">Steps:</h1>
@@ -116,8 +118,8 @@
             </a>
         </div>
     </footer>
-
+    <!-- 
     <script src="scripts/firebaseAPI_config.js"></script>
-    <script src="scripts/modify.js"></script>
+    <script src="scripts/modify.js"></script> -->
 
 </html>
