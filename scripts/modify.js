@@ -1,3 +1,15 @@
+function modifyDesc(id, desc) {
+    db.collection("tasks").doc(id).set({         //write to firestore. We are using the UID for the ID in users collection
+        description: desc                    //optional default profile info
+    })
+}
+
+function modifyName(id, nombre) {
+    db.collection("tasks").doc(id).set({
+        name: nombre
+    })
+}
+
 const urlParams = new URLSearchParams(window.location.search);
 const taskId = urlParams.get("id");
 
@@ -18,6 +30,9 @@ async function load_tasks(taskid) {
             }
         });
 }
+// modifyDate(id, push) {
+    
+//     db.collection("tasks").doc(id).set({
 
 async function save_task(taskid) {
     const taskRef = db.collection("tasks").doc(taskid);
