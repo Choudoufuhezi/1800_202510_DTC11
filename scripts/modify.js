@@ -1,47 +1,24 @@
-async function modlify_description(description) {
-    try {
-        const tasks = db.collection("tasks");
-        await tasks.add({
-            task_description: description
+const urlParams = new URLSearchParams(window.location.search);
+const taskId = urlParams.get("id");
+
+async function load_tasks(taskid) {
+    const taskRef = db.collection("tasks").doc(taskid);
+    taskRef.get()
+        .then(taskdoc => {
+            let name = taskdoc.data().name;
+            let description = taskdoc.data().description;
+            let date = taskdoc.data().description;
+
+            if (name != null) {
+                document.getElementById("task_name_text").value = name
+            }
+
+            if (description != null) {
+                document.getElementById("description_text").value = description
+            }
         });
-    } catch (error) {
-        console.log("error", error);
-    }
 }
 
-async function modlify_task_name(taskName) {
-    try {
-        const tasks = db.collection("tasks");
-        await tasks.add({
-            task_name: taskName
-        });
-    } catch (error) {
-        console.log("error", error);
-    }
-}
 
+load_tasks(taskId);
 
-document.getElementById("task_name").addEventListener("submit", async function (event) {
-    event.preventDefault();
-    const taskName = document.getElementById("task_name_text").value.trim();
-    console.log(taskName);
-
-    if (taskName) {
-        await modlify_task_name(taskName);
-    } else {
-        console.log("Task name cannot be empty.");
-    }
-});
-
-
-document.getElementById("description").addEventListener("submit", async function (event) {
-    event.preventDefault();
-    const description = document.getElementById("description_text").value.trim();
-    console.log(description);
-
-    if (description) {
-        await modlify_description(description);
-    } else {
-        console.log("Description cannot be empty.");
-    }
-});
