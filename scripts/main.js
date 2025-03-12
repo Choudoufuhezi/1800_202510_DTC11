@@ -33,8 +33,10 @@ function loadTasks() {
             const taskId = doc.id;
 
             const taskDiv = document.createElement("div");
-            taskDiv.className = "border border-primary m-3 card";
-            taskDiv.style.backgroundColor = "#CAE9F5";
+            taskDiv.className = "border border-primary m-3 card shadow-sm";
+            taskDiv.style = "background-color: #CAE9F5; transition: 0.3s;";
+            taskDiv.onmouseover = () => taskDiv.style.backgroundColor = "#B0DFF5";
+            taskDiv.onmouseout = () => taskDiv.style.backgroundColor = "#CAE9F5";
             taskDiv.innerHTML = `
                 <a href="modify_tasks.html?id=${taskId}" class="stretched-link" style="text-decoration:none">
                     <div class="card-body">
