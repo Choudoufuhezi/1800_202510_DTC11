@@ -22,3 +22,34 @@ function getNameFromAuth() {
         }
     });
 }
+
+function loadTasks() {
+    const taskList = document.getElementById("tasks");
+    taskList.innerHTML = "";
+
+    db.collection("tasks").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            const task = doc.data();
+            const taskId = doc.id;
+
+            const taskDiv = document.createElement("div");
+            taskDiv.className = "border border-primary m-3 card";
+            taskDiv.style.backgroundColor = "#CAE9F5";
+            taskDiv.innerHTML = `
+                <a href="modify_tasks.html?id=${taskId}" class="stretched-link" style="text-decoration:none">
+                    <div class="card-body">
+                        <h3 class="text-black">${task.name}</h3>
+                        <p class="text-black">${task.description}</p>
+                        <p class="text-black">DUE: ${task.date}</p>
+                    </div>
+                </a>
+            `;
+
+            taskList.appendChild(taskDiv);
+        });
+    }).catch((error) => {
+        console.error("Error loading tasks: ", error);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", loadTasks);
