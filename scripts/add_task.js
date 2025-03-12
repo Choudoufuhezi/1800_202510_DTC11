@@ -15,6 +15,8 @@ document.getElementById('submit').addEventListener('click', function () {
     date = document.getElementById("taskdate").value;
 
     writeTasks(title, desc, date);
+
+    window.location.href = "main.html"
 });
 
 
