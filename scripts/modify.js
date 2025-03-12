@@ -1,47 +1,32 @@
-async function modlify_description(description) {
-    try {
-        const tasks = db.collection("tasks");
-        await tasks.add({
-            task_description: description
-        });
-    } catch (error) {
-        console.log("error", error);
-    }
+function modifyDesc(id, desc) {
+    db.collection("tasks").doc(id).set({         //write to firestore. We are using the UID for the ID in users collection
+        description: desc                    //optional default profile info
+    })
 }
 
-async function modlify_task_name(taskName) {
-    try {
-        const tasks = db.collection("tasks");
-        await tasks.add({
-            task_name: taskName
-        });
-    } catch (error) {
-        console.log("error", error);
-    }
+function modifyName(id, nombre) {
+    db.collection("tasks").doc(id).set({
+        name: nombre
+    })
 }
+// modifyDate(id, push) {
+    
+//     db.collection("tasks").doc(id).set({
+
+//     })
+// }
 
 
-document.getElementById("task_name").addEventListener("submit", async function (event) {
-    event.preventDefault();
-    const taskName = document.getElementById("task_name_text").value.trim();
-    console.log(taskName);
+document.getElementById('submit').addEventListener('click', function() {
+    const id = urlParams.get('id');
+    const title = document.getElementById('task_name_text').value;
+    modifyName(id, title);
 
-    if (taskName) {
-        await modlify_task_name(taskName);
-    } else {
-        console.log("Task name cannot be empty.");
-    }
-});
+})
 
+document.getElementById('submit1').addEventListener('click', function () {
+    const id = urlParams.get('id');
+    const title = document.getElementById('description_text').value;
+    modifyDesc(id, title);
+})
 
-document.getElementById("description").addEventListener("submit", async function (event) {
-    event.preventDefault();
-    const description = document.getElementById("description_text").value.trim();
-    console.log(description);
-
-    if (description) {
-        await modlify_description(description);
-    } else {
-        console.log("Description cannot be empty.");
-    }
-});

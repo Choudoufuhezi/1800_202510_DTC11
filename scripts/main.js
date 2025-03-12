@@ -40,7 +40,7 @@ function loadTasks() {
             taskDiv.innerHTML = `
                 <a href="modify_tasks.html?id=${taskId}" class="stretched-link" style="text-decoration:none">
                     <div class="card-body">
-                        <h3 class="text-black">${task.name}</h3>
+                        <h3 class="text-black">${task.name}</h3>a
                         <p class="text-black">${task.description}</p>
                         <p class="text-black">DUE: ${task.date}</p>
                     </div>
