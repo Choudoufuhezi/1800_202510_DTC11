@@ -31,7 +31,7 @@ async function load_tasks(taskid) {
         });
 }
 // modifyDate(id, push) {
-    
+
 //     db.collection("tasks").doc(id).set({
 
 async function save_task(taskid) {
@@ -45,11 +45,13 @@ async function save_task(taskid) {
         description: description
     })
         .then(() => {
-            console.log("Task updated successfully!");
+            window.location.href = "main.html"
         })
         .catch(error => {
             console.error("Error updating task: ", error);
         });
+
+
 }
 
 
