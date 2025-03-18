@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+# Use this template to add features that we discussed
+# Works in tandem with javascript.js
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,13 +24,17 @@
 </head>
 
 <body>
-    <div>
-        <h2>Current Time: <span id="clock"></span></h2>
-        <h2>Set Timer:</h2>
-        <input type="number" id="timer-input" placeholder="Enter seconds">
-        <button id="start-timer">Start Timer</button>
-        <h3 id="timer-display"></h3>
+    <div style="height: 100vh; width: 100vw; flex-wrap: wrap; margin: 0; overflow: hidden; background-color: blue;" id="background-colorizer">
+        <div>
+            <h2>Current Time: <span id="clock"></span></h2>
+            <h2>Set Timer:</h2>
+            <input type="number" id="timer-input" placeholder="Enter seconds">
+            <button id="start-timer">Start Timer</button>
+            <h3 id="timer-display"></h3>
+        </div>
+        <button id="show-notification">Show Notification</button>
     </div>
+
 </body>
 
 </html>
