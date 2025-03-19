@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-# Use this template to add features that we discussed
-# Works in tandem with javascript.js
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,20 +19,53 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <script src="scripts/firebaseAPI_config.js"></script>
     <script src="scripts/javascript.js"></script>
+    <link rel="stylesheet" href="styles/dark-mode.css">
+    <style>
+        #dark-mode {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
-<body>
-    <div style="height: 100vh; width: 100vw; flex-wrap: wrap; margin: 0; overflow: hidden; background-color: blue;" id="background-colorizer">
+<body id="dark-mode">
+    <div id="background-colorizer">
         <div>
             <h2>Current Time: <span id="clock"></span></h2>
             <h2>Set Timer:</h2>
             <input type="number" id="timer-input" placeholder="Enter seconds">
             <button id="start-timer">Start Timer</button>
             <h3 id="timer-display"></h3>
+            <div>
+                <button id="toggle-btn">Toggle Dark Mode</button>
+            </div>
         </div>
         <button id="show-notification">Show Notification</button>
     </div>
 
+    <script>
+        let isDarkMode = false;
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            const element = document.getElementById("dark-mode");
+            element.style.backgroundColor = isDarkMode ? "black" : "white";
+        }
+
+        // Attach event listener after the script is loaded
+        document.getElementById("toggle-btn").addEventListener("click", toggleDarkMode);
+    </script>
+    <script src="scripts/global.js"></script>
 </body>
 
 </html>

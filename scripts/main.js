@@ -33,16 +33,19 @@ function loadTasks() {
             const taskId = doc.id;
 
             const taskDiv = document.createElement("div");
-            taskDiv.className = "border border-primary m-3 card shadow-sm";
-            taskDiv.style = "background-color: #CAE9F5; transition: 0.3s;";
-            taskDiv.onmouseover = () => taskDiv.style.backgroundColor = "#B0DFF5";
-            taskDiv.onmouseout = () => taskDiv.style.backgroundColor = "#CAE9F5";
+            taskDiv.className = "border border-primary m-3 card shadow-sm task-card"; // Add a specific class for task cards
+
+            // Apply dark mode styles dynamically if the body has the dark-mode class
+            if (document.body.classList.contains("dark-mode")) {
+                taskDiv.classList.add("dark-mode-task");
+            }
+
             taskDiv.innerHTML = `
-                <a href="modify_tasks.html?id=${taskId}" class="stretched-link" style="text-decoration:none">
+                <a href="modify_tasks.html?id=${taskId}" class="stretched-link">
                     <div class="card-body">
-                        <h3 class="text-black">${task.name}</h3>
-                        <p class="text-black">${task.description}</p>
-                        <p class="text-black">DUE: ${task.date}</p>
+                        <h3>${task.name}</h3>
+                        <p>${task.description}</p>
+                        <p>DUE: ${task.date}</p>
                     </div>
                 </a>
             `;

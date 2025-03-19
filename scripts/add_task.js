@@ -1,6 +1,12 @@
-function writeTasks(taskname, desc, taskdate) {
-    //define a variable for the collection you want to create in Firestore to populate data
-    var tasks = db.collection("tasks");
+async function writeTasks(taskname, desc, taskdate) {
+    const tasks = db.collection("tasks");
+
+    // Check if the user already has 10 tasks
+    const taskCount = await tasks.get().then(snapshot => snapshot.size);
+    if (taskCount >= 10) {
+        alert("Task limit reached. You cannot create more than 10 tasks.");
+        return;
+    }
 
     return tasks.add({
         name: taskname,
@@ -10,13 +16,17 @@ function writeTasks(taskname, desc, taskdate) {
 }
 
 document.getElementById('submit').addEventListener('click', async function () {
-    title = document.getElementById("tasktitle").value;
-    desc = document.getElementById("taskdesc").value;
-    date = document.getElementById("taskdate").value;
+    const title = document.getElementById("tasktitle").value;
+    const desc = document.getElementById("taskdesc").value;
+    const date = document.getElementById("taskdate").value;
 
-    await writeTasks(title, desc, date)
-    window.location.href = "main.html"
+    if (!title || !desc || !date) {
+        alert("Please fill in all fields before submitting.");
+        return;
+    }
 
+    await writeTasks(title, desc, date);
+    window.location.href = "main.html";
 });
 
 

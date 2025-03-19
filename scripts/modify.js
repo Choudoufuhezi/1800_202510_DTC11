@@ -40,20 +40,25 @@ async function save_task(taskid) {
     const name = document.getElementById("task_name_text").value;
     const description = document.getElementById("description_text").value;
 
+    // Fetch the current task data to avoid unnecessary writes
+    const currentTask = await taskRef.get().then(doc => doc.data());
+
+    if (currentTask.name === name && currentTask.description === description) {
+        alert("No changes detected.");
+        return;
+    }
+
     await taskRef.update({
         name: name,
         description: description
     })
         .then(() => {
-            window.location.href = "main.html"
+            window.location.href = "main.html";
         })
         .catch(error => {
             console.error("Error updating task: ", error);
         });
-
-
 }
-
 
 load_tasks(taskId);
 
