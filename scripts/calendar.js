@@ -2,88 +2,73 @@ document.addEventListener("DOMContentLoaded", function () {
     const calendarElement = document.getElementById("calendar");
     const monthYearElement = document.getElementById("month-year");
 
-    function generateCalendar(year, month) {
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        const weeks = [];
-        let currentDay = 1;
+    // Function to generate the calendar
+    function generateCalendar(tasks) {
+        const now = new Date();
+        const currentMonth = now.getMonth();
+        const currentYear = now.getFullYear();
 
-        for (let i = 0; i < 6; i++) {
-            const week = [];
-            for (let j = 0; j < 7; j++) {
-                if (i === 0 && j < firstDay || currentDay > daysInMonth) {
-                    week.push("");
+        monthYearElement.textContent = `${now.toLocaleString("default", { month: "long" })} ${currentYear}`;
+
+        const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        let calendarHTML = "";
+        let dayCounter = 1;
+
+        for (let week = 0; week < 6; week++) {
+            calendarHTML += "<tr>";
+            for (let day = 0; day < 7; day++) {
+                if (week === 0 && day < firstDayOfMonth) {
+                    calendarHTML += "<td></td>";
+                } else if (dayCounter > daysInMonth) {
+                    calendarHTML += "<td></td>";
                 } else {
-                    week.push(currentDay++);
+                    const taskHTML = tasks
+                        .filter(task => {
+                            const taskDate = new Date(task.date);
+                            return (
+                                taskDate.getDate() === dayCounter &&
+                                taskDate.getMonth() === currentMonth &&
+                                taskDate.getFullYear() === currentYear
+                            );
+                        })
+                        .map(task => `<div class="event">${task.name}<br>${task.date}</div>`)
+                        .join("");
+
+                    calendarHTML += `<td>${dayCounter}${taskHTML}</td>`;
+                    dayCounter++;
                 }
             }
-            weeks.push(week);
+            calendarHTML += "</tr>";
         }
 
-        return weeks;
+        calendarElement.querySelector("tbody").innerHTML = calendarHTML;
+
+        // Apply dark mode styles dynamically if the body has the dark-mode class
+        if (document.body.classList.contains("dark-mode")) {
+            document.body.classList.add("dark-mode");
+        }
     }
 
-    function renderCalendar(year, month) {
-        const weeks = generateCalendar(year, month);
-        calendarElement.querySelector("tbody").innerHTML = "";
-        monthYearElement.textContent = new Date(year, month).toLocaleString("default", { month: "long", year: "numeric" });
+    // Fetch tasks from Firestore and generate the calendar
+    firebase.auth().onAuthStateChanged(user => {
+        if (!user) {
+            console.log("No user is logged in.");
+            calendarElement.innerHTML = "<p>Please log in to view your calendar.</p>";
+            return;
+        }
 
-        weeks.forEach(week => {
-            const row = document.createElement("tr");
-            week.forEach(day => {
-                const cell = document.createElement("td");
-                if (day) {
-                    cell.dataset.date = new Date(year, month, day).toISOString().split("T")[0];
-                }
-                cell.textContent = day || "";
-                row.appendChild(cell);
+        db.collection("tasks")
+            .where("uid", "==", user.uid)
+            .get()
+            .then(querySnapshot => {
+                const tasks = querySnapshot.docs.map(doc => doc.data());
+                generateCalendar(tasks);
+            })
+            .catch(error => {
+                console.error("Error loading tasks: ", error);
+                calendarElement.innerHTML = "<p>Error loading calendar. Please try again later.</p>";
             });
-            calendarElement.querySelector("tbody").appendChild(row);
-        });
-    }
-
-    function loadTasks(year, month) {
-        firebase.auth().onAuthStateChanged(user => {
-            if (!user) {
-                console.log("No user is logged in.");
-                return;
-            }
-
-            db.collection("tasks")
-                .where("uid", "==", user.uid)
-                .get()
-                .then(querySnapshot => {
-                    if (querySnapshot.empty) {
-                        console.log("No tasks found for the user.");
-                        return;
-                    }
-
-                    querySnapshot.forEach(doc => {
-                        const task = doc.data();
-                        const taskDate = new Date(task.date).toISOString().split("T")[0];
-                        const taskCell = calendarElement.querySelector(`[data-date="${taskDate}"]`);
-
-                        if (taskCell) {
-                            const taskDiv = document.createElement("div");
-                            taskDiv.className = "event";
-                            taskDiv.innerHTML = `
-                                <a href="modify_tasks.html?id=${doc.id}" style="text-decoration: none; color: white;">
-                                    ${task.name}<br>${new Date(task.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                </a>`;
-                            taskCell.appendChild(taskDiv);
-                        }
-                    });
-                })
-                .catch(error => {
-                    console.error("Error loading tasks: ", error);
-                });
-        });
-    }
-
-    const today = new Date();
-    const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth();
-
-    renderCalendar(currentYear, currentMonth);
-    loadTasks(currentYear, currentMonth);
+    });
 });

@@ -135,3 +135,64 @@ a:hover {
     color: inherit !important;
     /* Ensure hover effect does not override parent styles */
 }
+
+.calendar {
+    background-color: #ffffff;
+    /* Default light mode background */
+    color: #000000;
+    /* Default light mode text color */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .calendar {
+    background-color: #1e1e1e !important;
+    /* Dark mode background */
+    color: #ffffff !important;
+    /* Dark mode text color */
+}
+
+.calendar th {
+    background-color: #f8f9fa;
+    /* Default light mode header background */
+    color: #000000;
+    /* Default light mode header text color */
+}
+
+body.dark-mode .calendar th {
+    background-color: #333333 !important;
+    /* Dark mode header background */
+    color: #ffffff !important;
+    /* Dark mode header text color */
+}
+
+.calendar td {
+    background-color: #ffffff;
+    /* Default light mode cell background */
+    color: #000000;
+    /* Default light mode cell text color */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .calendar td {
+    background-color: #2a2a2a !important;
+    /* Dark mode cell background */
+    color: #ffffff !important;
+    /* Dark mode cell text color */
+}
+
+.event {
+    background-color: #1E3A8A;
+    /* Default light mode event background */
+    color: #ffffff;
+    /* Default light mode event text color */
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px 0;
+}
+
+body.dark-mode .event {
+    background-color: #4444aa !important;
+    /* Dark mode event background */
+    color: #ffffff !important;
+    /* Dark mode event text color */
+}
