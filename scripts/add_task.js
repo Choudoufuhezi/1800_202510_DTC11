@@ -1,8 +1,14 @@
 async function writeTasks(taskname, desc, taskdate) {
+    const user = firebase.auth().currentUser; // Get the currently logged-in user
+    if (!user) {
+        alert("You must be logged in to add tasks.");
+        return;
+    }
+
     const tasks = db.collection("tasks");
 
     // Check if the user already has 10 tasks
-    const taskCount = await tasks.get().then(snapshot => snapshot.size);
+    const taskCount = await tasks.where("uid", "==", user.uid).get().then(snapshot => snapshot.size);
     if (taskCount >= 10) {
         alert("Task limit reached. You cannot create more than 10 tasks.");
         return;
@@ -11,7 +17,8 @@ async function writeTasks(taskname, desc, taskdate) {
     return tasks.add({
         name: taskname,
         description: desc,
-        date: taskdate
+        date: taskdate,
+        uid: user.uid // Associate the task with the logged-in user's UID
     });
 }
 
