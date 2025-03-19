@@ -19,7 +19,7 @@ async function load_tasks(taskid) {
         .then(taskdoc => {
             let name = taskdoc.data().name;
             let description = taskdoc.data().description;
-            let date = taskdoc.data().description;
+            let date = taskdoc.data().date;
 
             if (name != null) {
                 document.getElementById("task_name_text").value = name
@@ -51,9 +51,104 @@ async function save_task(taskid) {
             console.error("Error updating task: ", error);
         });
 
-
 }
 
 
 load_tasks(taskId);
 
+
+async function a_week(taskid) {
+    const taskRef = db.collection("tasks").doc(taskid);
+    const taskdoc = await taskRef.get();
+
+    if (!taskdoc.exists) {
+        throw new Error("Task not found");
+    }
+
+    let date = taskdoc.data().date;
+    let current_date = new Date(date);
+    current_date.setDate(current_date.getDate() - 7);
+    string_current_data = current_date.toString()
+
+    await taskRef.update({
+        date: string_current_data
+    })
+        .then(() => {
+            window.location.href = "main.html"
+        })
+        .catch(error => {
+            console.error("Error updating task: ", error);
+        });
+}
+
+async function a_day(taskid) {
+    const taskRef = db.collection("tasks").doc(taskid);
+    const taskdoc = await taskRef.get();
+
+    if (!taskdoc.exists) {
+        throw new Error("Task not found");
+    }
+
+    let date = taskdoc.data().date;
+    let current_date = new Date(date);
+    current_date.setDate(current_date.getDate() - 1);
+    string_current_data = current_date.toString()
+
+    await taskRef.update({
+        date: string_current_data
+    })
+        .then(() => {
+            window.location.href = "main.html"
+        })
+        .catch(error => {
+            console.error("Error updating task: ", error);
+        });
+}
+
+async function a_day(taskid) {
+    const taskRef = db.collection("tasks").doc(taskid);
+    const taskdoc = await taskRef.get();
+
+    if (!taskdoc.exists) {
+        throw new Error("Task not found");
+    }
+
+    let date = taskdoc.data().date;
+    let current_date = new Date(date);
+    current_date.setDate(current_date.getDate() - 1);
+    string_current_data = current_date.toString()
+
+    await taskRef.update({
+        date: string_current_data
+    })
+        .then(() => {
+            window.location.href = "main.html"
+        })
+        .catch(error => {
+            console.error("Error updating task: ", error);
+        });
+}
+
+async function a_hour(taskid) {
+    const taskRef = db.collection("tasks").doc(taskid);
+    const taskdoc = await taskRef.get();
+
+    if (!taskdoc.exists) {
+        throw new Error("Task not found");
+    }
+
+    let date = taskdoc.data().date;
+    let current_date = new Date(date);
+    current_date.setDate(current_date.setHours() - 1);
+    string_current_data = current_date.toString()
+
+    await taskRef.update({
+        date: string_current_data
+    })
+        .then(() => {
+            window.location.href = "main.html"
+        })
+        .catch(error => {
+            console.error("Error updating task: ", error);
+        });
+}
