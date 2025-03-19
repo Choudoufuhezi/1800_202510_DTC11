@@ -14,10 +14,11 @@ async function writeTasks(taskname, desc, taskdate) {
         return;
     }
 
+    time = new Date(taskdate);
     return tasks.add({
         name: taskname,
         description: desc,
-        date: taskdate,
+        date: time.toString(),
         uid: user.uid // Associate the task with the logged-in user's UID
     });
 }
