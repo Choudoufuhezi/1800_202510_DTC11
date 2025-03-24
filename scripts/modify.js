@@ -30,9 +30,6 @@ async function load_tasks(taskid) {
             }
         });
 }
-// modifyDate(id, push) {
-
-//     db.collection("tasks").doc(id).set({
 
 async function save_task(taskid) {
     const taskRef = db.collection("tasks").doc(taskid);

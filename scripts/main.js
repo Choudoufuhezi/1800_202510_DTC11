@@ -34,25 +34,56 @@ function loadTasks() {
             return;
         }
 
-        db.collection("tasks").where("uid", "==", user.uid).get().then((querySnapshot) => {
+        db.collection("tasks").where("uid", "==", user.uid).orderBy("date", "desc").get().then((querySnapshot) => {
             if (querySnapshot.empty) {
                 taskList.innerHTML = "<p>No tasks found. Add a task to get started!</p>";
                 return;
             }
 
-            querySnapshot.forEach((doc) => {
-                const task = doc.data();
-                const taskId = doc.id;
+            query_task(querySnapshot, taskList)
 
-                const taskDiv = document.createElement("div");
-                taskDiv.className = "border border-primary m-3 card shadow-sm task-card"; // Add a specific class for task cards
-
-                // Apply dark mode styles dynamically if the body has the dark-mode class
-                if (document.body.classList.contains("dark-mode")) {
-                    taskDiv.classList.add("dark-mode-task");
+            refreshInterval = setInterval(() => {
+                while (taskList.childElementCount != 0) {
+                    taskList.removeChild(taskList.firstChild)
                 }
+                query_task(querySnapshot, taskList)
+            }, 30 * 1000);
+        }).catch((error) => {
+            console.error("Error loading tasks: ", error);
+            taskList.innerHTML = "<p>Error loading tasks. Please try again later.</p>";
+        });
+    });
+}
 
-                taskDiv.innerHTML = `
+function query_task(querySnapshot, taskList) {
+    querySnapshot.forEach((doc) => {
+        const task = doc.data();
+        const taskId = doc.id;
+
+        const taskDiv = document.createElement("div");
+        taskDiv.className = "border border-primary m-3 card shadow-sm task-card";
+
+        // Apply dark mode styles dynamically if the body has the dark-mode class
+        if (document.body.classList.contains("dark-mode")) {
+            taskDiv.classList.add("dark-mode-task");
+        }
+
+        const parse_date = Date.parse(task.date)
+        const current_date = Date.parse(new Date())
+        const expired = parse_date < current_date
+
+        if (expired) {
+            taskDiv.innerHTML = `
+                    <a href="#" class="bg-opacity-25 bg-secondary text-muted">
+                        <div class="card-body">
+                            <h3>${task.name}</h3>
+                            <p>${task.description}</p>
+                            <p>DUE: ${task.date}</p>
+                        </div>
+                    </a>
+                `;
+        } else {
+            taskDiv.innerHTML = `
                     <a href="modify_tasks.html?id=${taskId}" class="stretched-link">
                         <div class="card-body">
                             <h3>${task.name}</h3>
@@ -61,14 +92,10 @@ function loadTasks() {
                         </div>
                     </a>
                 `;
+        }
 
-                taskList.appendChild(taskDiv);
-            });
-        }).catch((error) => {
-            console.error("Error loading tasks: ", error);
-            taskList.innerHTML = "<p>Error loading tasks. Please try again later.</p>";
-        });
-    });
+        taskList.appendChild(taskDiv);
+    })
 }
 
 document.addEventListener("DOMContentLoaded", loadTasks);
