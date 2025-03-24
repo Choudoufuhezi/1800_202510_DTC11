@@ -94,6 +94,12 @@ function query_task(querySnapshot, taskList) {
                 `;
         }
 
+        if (parse_date == current_date || (current_date <= parse_date + 30000 && current_date >= parse_date)) {
+            const modal = new bootstrap.Modal(document.getElementById('messageModal'));
+            document.getElementById('modalMessage').innerHTML = `Your task "${task.name}" is due!"`
+            modal.show();
+        }
+
         taskList.appendChild(taskDiv);
     })
 }
