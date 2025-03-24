@@ -74,13 +74,13 @@ function query_task(querySnapshot, taskList) {
 
         if (expired) {
             taskDiv.innerHTML = `
-                    <a href="#" class="bg-opacity-25 bg-secondary text-muted">
+                    <div class="bg-opacity-25 bg-secondary text-muted">
                         <div class="card-body">
                             <h3>${task.name}</h3>
                             <p>${task.description}</p>
                             <p>DUE: ${task.date}</p>
                         </div>
-                    </a>
+                    </div>
                 `;
         } else {
             taskDiv.innerHTML = `
