@@ -34,9 +34,19 @@ document.getElementById('submit').addEventListener('click', async function () {
     }
 
     await writeTasks(title, desc, date);
-    window.location.href = "main.html";
+    showAlert("Task has been successfully added");
 });
 
+
+function showAlert(message) {
+    const modal = new bootstrap.Modal(document.getElementById('messageModal'));
+    document.getElementById('modalMessage').innerHTML = message;
+    modal.show();
+}
+
+function return_to_main() {
+    window.location.href = "main.html"
+}
 
 
 

@@ -23,7 +23,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="scripts/script.js"></script>
 <script src="scripts/firebaseAPI_config.js"></script>
-<script src="scripts/modify.js"></script>
 <style>
     .card {
         margin-top: 25px;
@@ -34,6 +33,17 @@
         color: blue;
     }
 </style>
+
+<div class="modal fade" id="messageModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <p class="modal-body text-dark text-4xl" id="modalMessage"></p>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="return_to_main()">close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <body style="flex-direction: column;">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -118,9 +128,8 @@
             </a>
         </div>
     </footer>
-    <!-- 
-    <script src="scripts/firebaseAPI_config.js"></script>
-    <script src="scripts/modify.js"></script> -->
+    <!-- <script src="scripts/firebaseAPI_config.js"></script> -->
+    <script src="scripts/modify.js"></script>
     <script src="scripts/global.js"></script>
 
 </html>

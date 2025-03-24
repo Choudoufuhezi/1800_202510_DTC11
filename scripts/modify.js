@@ -53,7 +53,7 @@ async function save_task(taskid) {
         description: description
     })
         .then(() => {
-            window.location.href = "main.html";
+            showAlert("Changes to the task has been successfully saved");
         })
         .catch(error => {
             console.error("Error updating task: ", error);
@@ -75,13 +75,13 @@ async function a_week(taskid) {
     let date = taskdoc.data().date;
     let current_date = new Date(date);
     current_date.setDate(current_date.getDate() - 7);
-    string_current_data = current_date.toString()
+    string_current_date = current_date.toString()
 
     await taskRef.update({
-        date: string_current_data
+        date: string_current_date
     })
         .then(() => {
-            window.location.href = "main.html"
+            showAlert("Task has been successfully push forward a week");
         })
         .catch(error => {
             console.error("Error updating task: ", error);
@@ -99,13 +99,13 @@ async function a_day(taskid) {
     let date = taskdoc.data().date;
     let current_date = new Date(date);
     current_date.setDate(current_date.getDate() - 1);
-    string_current_data = current_date.toString()
+    string_current_date = current_date.toString()
 
     await taskRef.update({
-        date: string_current_data
+        date: string_current_date
     })
         .then(() => {
-            window.location.href = "main.html"
+            showAlert("Task has been successfully push forward a day");
         })
         .catch(error => {
             console.error("Error updating task: ", error);
@@ -123,20 +123,20 @@ async function a_day(taskid) {
     let date = taskdoc.data().date;
     let current_date = new Date(date);
     current_date.setDate(current_date.getDate() - 1);
-    string_current_data = current_date.toString()
+    string_current_date = current_date.toString()
 
     await taskRef.update({
-        date: string_current_data
+        date: string_current_date
     })
         .then(() => {
-            window.location.href = "main.html"
+            showAlert("Task has been successfully push forward a day");
         })
         .catch(error => {
             console.error("Error updating task: ", error);
         });
 }
 
-async function a_hour(taskid) {
+async function an_hour(taskid) {
     const taskRef = db.collection("tasks").doc(taskid);
     const taskdoc = await taskRef.get();
 
@@ -146,16 +146,27 @@ async function a_hour(taskid) {
 
     let date = taskdoc.data().date;
     let current_date = new Date(date);
-    current_date.setDate(current_date.setHours() - 1);
-    string_current_data = current_date.toString()
+    current_date.setHours(current_date.getHours() - 1);
+    string_current_date = current_date.toString()
 
     await taskRef.update({
-        date: string_current_data
+        date: string_current_date
     })
         .then(() => {
-            window.location.href = "main.html"
+            showAlert("Task has been successfully push forward an hour");
         })
         .catch(error => {
             console.error("Error updating task: ", error);
         });
 }
+
+function showAlert(message) {
+    const modal = new bootstrap.Modal(document.getElementById('messageModal'));
+    document.getElementById('modalMessage').innerHTML = message;
+    modal.show();
+}
+
+function return_to_main() {
+    window.location.href = "main.html"
+}
+

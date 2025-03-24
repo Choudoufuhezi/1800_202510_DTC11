@@ -21,6 +21,19 @@
     <link rel="stylesheet" href="styles/dark-mode.css">
 </head>
 
+
+<div class="modal fade" id="messageModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <p class="modal-body text-dark text-4xl" id="modalMessage"></p>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    onclick="return_to_main()">close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
