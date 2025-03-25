@@ -61,7 +61,7 @@ function query_task(querySnapshot, taskList) {
         const taskId = doc.id;
 
         const taskDiv = document.createElement("div");
-        taskDiv.className = "border border-primary m-3 card shadow-sm task-card";
+        taskDiv.className = "m-3 bg-white card shadow-sm task-card shadow-lg";
 
         // Apply dark mode styles dynamically if the body has the dark-mode class
         if (document.body.classList.contains("dark-mode")) {
