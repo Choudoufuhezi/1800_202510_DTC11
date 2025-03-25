@@ -34,7 +34,7 @@ function loadTasks() {
             return;
         }
 
-        db.collection("tasks").where("uid", "==", user.uid).orderBy("date", "desc").get().then((querySnapshot) => {
+        db.collection("tasks").where("uid", "==", user.uid).orderBy("date", "desc").orderBy("importance", "desc").get().then((querySnapshot) => {
             if (querySnapshot.empty) {
                 taskList.innerHTML = "<p>No tasks found. Add a task to get started!</p>";
                 return;
@@ -79,6 +79,7 @@ function query_task(querySnapshot, taskList) {
                             <h3>${task.name}</h3>
                             <p>${task.description}</p>
                             <p>DUE: ${task.date}</p>
+                            ${render_importance_svg(task.importance)}
                         </div>
                     </div>
                 `;
@@ -89,6 +90,7 @@ function query_task(querySnapshot, taskList) {
                             <h3>${task.name}</h3>
                             <p>${task.description}</p>
                             <p>DUE: ${task.date}</p>
+                            ${render_importance_svg(task.importance)}
                         </div>
                     </a>
                 `;
@@ -101,7 +103,35 @@ function query_task(querySnapshot, taskList) {
         }
 
         taskList.appendChild(taskDiv);
+
     })
+}
+
+
+function render_importance_svg(importance) {
+    const importanceColors = {
+        1: "#94d82d",
+        2: "#1952fc",
+        3: "#f1fc19",
+        4: "#fcc419",
+        5: "#f50000"
+    };
+    const color = importanceColors[importance] || "#94d82d";
+
+    return `
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             width="50" height="50" 
+             viewBox="0 0 256 256"
+             aria-hidden="true">
+            <g fill="${color}" fill-rule="nonzero" stroke="none" 
+               stroke-width="1" stroke-linecap="butt"
+               stroke-linejoin="miter" stroke-miterlimit="10">
+                <g transform="scale(8,8)">
+                    <path d="M7,5v23l1.59375,-1.1875l7.40625,-5.5625l7.40625,5.5625l1.59375,1.1875v-23zM9,7h14v17l-6.40625,-4.8125l-0.59375,-0.4375l-0.59375,0.4375l-6.40625,4.8125z"/>
+                </g>
+            </g>
+        </svg>
+    `;
 }
 
 document.addEventListener("DOMContentLoaded", loadTasks);
