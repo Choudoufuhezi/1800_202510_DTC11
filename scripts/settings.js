@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const popup = document.createElement("div");
         popup.textContent = message;
         popup.style.position = "fixed";
-        popup.style.bottom = "20px";
-        popup.style.right = "20px";
+        popup.style.top = "20px"; // Move the popup to the top
+        popup.style.right = "20px"; // Align it to the right
         popup.style.backgroundColor = "#007BFF";
         popup.style.color = "white";
         popup.style.padding = "10px 20px";

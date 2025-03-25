@@ -68,45 +68,31 @@ function query_task(querySnapshot, taskList) {
             taskDiv.classList.add("dark-mode-task");
         }
 
-        const parse_date = Date.parse(task.date)
-        const current_date = Date.parse(new Date())
-        const expired = parse_date < current_date
+        const parse_date = Date.parse(task.date);
+        const current_date = Date.parse(new Date());
+        const expired = parse_date < current_date;
 
-        if (expired) {
-            taskDiv.innerHTML = `
-                    <div class="bg-opacity-25 bg-secondary text-muted">
-                        <div class="card-body">
-                            <h3>${task.name}</h3>
-                            <p>${task.description}</p>
-                            <p>DUE: ${task.date}</p>
-                            ${render_importance_svg(task.importance)}
-                        </div>
-                    </div>
-                `;
-        } else {
-            taskDiv.innerHTML = `
-                    <a href="modify_tasks.html?id=${taskId}" class="stretched-link">
-                        <div class="card-body">
-                            <h3>${task.name}</h3>
-                            <p>${task.description}</p>
-                            <p>DUE: ${task.date}</p>
-                            ${render_importance_svg(task.importance)}
-                        </div>
-                    </a>
-                `;
-        }
+        taskDiv.innerHTML = `
+            <a href="modify_tasks.html?id=${taskId}" class="stretched-link">
+                <div class="card-body">
+                    <h3>${task.name}</h3>
+                    <p>${task.description}</p>
+                    <p>DUE: ${task.date}</p>
+                    ${expired ? '<p class="text-danger">This task is overdue</p>' : ''}
+                    ${render_importance_svg(task.importance)}
+                </div>
+            </a>
+        `;
 
         if (parse_date == current_date || (current_date <= parse_date + 30000 && current_date >= parse_date)) {
             const modal = new bootstrap.Modal(document.getElementById('messageModal'));
-            document.getElementById('modalMessage').innerHTML = `Your task "${task.name}" is due!"`
+            document.getElementById('modalMessage').innerHTML = `Your task "${task.name}" is due!`;
             modal.show();
         }
 
         taskList.appendChild(taskDiv);
-
-    })
+    });
 }
-
 
 function render_importance_svg(importance) {
     const importanceColors = {

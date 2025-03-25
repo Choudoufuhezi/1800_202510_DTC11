@@ -39,7 +39,8 @@
         <div class="modal-content">
             <p class="modal-body text-dark text-4xl" id="modalMessage"></p>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="return_to_main()">close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    onclick="return_to_main()">close</button>
             </div>
         </div>
     </div>
@@ -80,9 +81,12 @@
     </div>
     <div class="border border-primary m-4 p-2 card" style="background-color: #CAE9F5;">
         <h1 class="card-title">Steps:</h1>
+        <div id="steps-container" class="mb-3">
+            <!-- Steps will be dynamically loaded here -->
+        </div>
         <div class="d-flex justify-content-evenly gap-1 mb-2">
-            <button href="#" class="btn btn-primary button-hover">Add</button>
-            <button href="#" class="btn btn-primary button-hover">Remove</button>
+            <input type="text" id="new-step" placeholder="Enter a new step" class="form-control">
+            <button class="btn btn-primary button-hover" onclick="addStep(taskId)">Add Step</button>
         </div>
     </div>
     <div class="border border-primary m-4 p-2 card" style="background-color: #CAE9F5;">

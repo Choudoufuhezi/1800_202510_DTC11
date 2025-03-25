@@ -15,20 +15,26 @@ const taskId = urlParams.get("id");
 
 async function load_tasks(taskid) {
     const taskRef = db.collection("tasks").doc(taskid);
-    taskRef.get()
-        .then(taskdoc => {
-            let name = taskdoc.data().name;
-            let description = taskdoc.data().description;
-            let date = taskdoc.data().date;
+    const taskdoc = await taskRef.get();
 
-            if (name != null) {
-                document.getElementById("task_name_text").value = name
-            }
+    if (taskdoc.exists) {
+        const task = taskdoc.data();
+        document.getElementById("task_name_text").value = task.name || "";
+        document.getElementById("description_text").value = task.description || "";
 
-            if (description != null) {
-                document.getElementById("description_text").value = description
-            }
+        // Load steps
+        const stepsContainer = document.getElementById("steps-container");
+        stepsContainer.innerHTML = "";
+        (task.steps || []).forEach((step, index) => {
+            const stepDiv = document.createElement("div");
+            stepDiv.className = "d-flex justify-content-between align-items-center mb-2";
+            stepDiv.innerHTML = `
+                <span>${step}</span>
+                <button class="btn btn-danger btn-sm" onclick="removeStep('${taskid}', ${index})">Remove</button>
+            `;
+            stepsContainer.appendChild(stepDiv);
         });
+    }
 }
 
 async function save_task(taskid) {
@@ -60,6 +66,31 @@ async function save_task(taskid) {
 
 load_tasks(taskId);
 
+async function addStep(taskid) {
+    const newStep = document.getElementById("new-step").value.trim();
+    if (!newStep) {
+        alert("Please enter a step.");
+        return;
+    }
+
+    const taskRef = db.collection("tasks").doc(taskid);
+    const taskdoc = await taskRef.get();
+    const steps = taskdoc.data().steps || [];
+
+    steps.push(newStep);
+    await taskRef.update({ steps });
+    load_tasks(taskid); // Reload steps
+}
+
+async function removeStep(taskid, index) {
+    const taskRef = db.collection("tasks").doc(taskid);
+    const taskdoc = await taskRef.get();
+    const steps = taskdoc.data().steps || [];
+
+    steps.splice(index, 1);
+    await taskRef.update({ steps });
+    load_tasks(taskid); // Reload steps
+}
 
 async function a_week(taskid) {
     const taskRef = db.collection("tasks").doc(taskid);

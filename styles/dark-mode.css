@@ -126,6 +126,17 @@ body.dark-mode footer {
     color: #ffffff !important;
 }
 
+footer svg {
+    fill: #000000;
+    /* Default light mode color */
+    transition: fill 0.3s ease;
+}
+
+body.dark-mode footer svg {
+    fill: #ffffff !important;
+    /* Dark mode color */
+}
+
 a {
     color: inherit !important;
     /* Ensure links inherit color from parent */
