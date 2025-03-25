@@ -140,30 +140,6 @@ async function a_day(taskid) {
         });
 }
 
-async function a_day(taskid) {
-    const taskRef = db.collection("tasks").doc(taskid);
-    const taskdoc = await taskRef.get();
-
-    if (!taskdoc.exists) {
-        throw new Error("Task not found");
-    }
-
-    let date = taskdoc.data().date;
-    let current_date = new Date(date);
-    current_date.setDate(current_date.getDate() - 1);
-    string_current_date = current_date.toString()
-
-    await taskRef.update({
-        date: string_current_date
-    })
-        .then(() => {
-            showAlert("Task has been successfully push forward a day");
-        })
-        .catch(error => {
-            console.error("Error updating task: ", error);
-        });
-}
-
 async function an_hour(taskid) {
     const taskRef = db.collection("tasks").doc(taskid);
     const taskdoc = await taskRef.get();
