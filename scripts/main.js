@@ -74,7 +74,7 @@ function query_task(querySnapshot, taskList) {
 
         if (expired) {
             taskDiv.innerHTML = `
-                    <a href="modify_tasks.html?id=${taskId}" class="stretched-link">
+                    <a href="modify_tasks.html?id=${taskId}" class="bg-opacity-25 bg-secondary text-muted">
                         <div class="card-body">
                             <h3>${task.name}</h3>
                             <p>${task.description}</p>
