@@ -8,11 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const currentMonth = now.getMonth();
         const currentYear = now.getFullYear();
 
+
         monthYearElement.textContent = `${now.toLocaleString("default", { month: "long" })} ${currentYear}`;
 
         const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
         const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
+        const taskIds = 0
         let calendarHTML = "";
         let dayCounter = 1;
 
@@ -27,13 +28,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     const taskHTML = tasks
                         .filter(task => {
                             const taskDate = new Date(task.date);
+                            console.log(task)
+
                             return (
                                 taskDate.getDate() === dayCounter &&
                                 taskDate.getMonth() === currentMonth &&
                                 taskDate.getFullYear() === currentYear
                             );
                         })
-                        .map(task => `<div class="event">${task.name}<br>${task.date}</div>`)
+                        .map(task => `<a href="modify_tasks.html?id=${task.id}" class="task-link">
+            <div class="event">${task.name}<br>${task.date}</div>
+        </a>`)
                         .join("");
 
                     calendarHTML += `<td>${dayCounter}${taskHTML}</td>`;
@@ -63,7 +68,11 @@ document.addEventListener("DOMContentLoaded", function () {
             .where("uid", "==", user.uid)
             .get()
             .then(querySnapshot => {
-                const tasks = querySnapshot.docs.map(doc => doc.data());
+                const tasks = querySnapshot.docs.map(doc => {
+                    const task = doc.data();
+                    task.id = doc.id; // Include the task ID for linking
+                    return task;
+                });
                 generateCalendar(tasks);
             })
             .catch(error => {
