@@ -113,6 +113,44 @@ body.dark-mode input:hover {
     background-color: #444444 !important;
 }
 
+button.rounded-square {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    /* Rounded square corners */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background-color: #28a745;
+    /* Green background for success */
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button.rounded-square:hover {
+    background-color: #218838;
+    /* Darker green on hover */
+    transform: scale(1.1);
+    /* Slight zoom effect */
+}
+
+button.rounded-square svg {
+    pointer-events: none;
+    /* Prevent interference with button click */
+}
+
+body.dark-mode button.rounded-square {
+    background-color: #1e7e34;
+    /* Darker green for dark mode */
+}
+
+body.dark-mode button.rounded-square:hover {
+    background-color: #155724;
+    /* Even darker green on hover in dark mode */
+}
+
 footer {
     background-color: #ffffff;
     /* Default light mode background */
@@ -206,4 +244,29 @@ body.dark-mode .event {
     /* Dark mode event background */
     color: #ffffff !important;
     /* Dark mode event text color */
+}
+
+.confirmation-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    /* Ensure it is above other elements */
+}
+
+.confirmation-overlay .bg-white {
+    z-index: 4;
+    /* Ensure the confirmation box is above the overlay */
+}
+
+.confirmation-overlay button {
+    z-index: 5;
+    /* Ensure buttons are fully clickable */
 }

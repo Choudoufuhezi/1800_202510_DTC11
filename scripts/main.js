@@ -61,7 +61,7 @@ function query_task(querySnapshot, taskList) {
         const taskId = doc.id;
 
         const taskDiv = document.createElement("div");
-        taskDiv.className = "m-3 bg-white card shadow-sm task-card shadow-lg";
+        taskDiv.className = "m-3 bg-white card shadow-sm task-card shadow-lg position-relative";
 
         // Apply dark mode styles dynamically if the body has the dark-mode class
         if (document.body.classList.contains("dark-mode")) {
@@ -72,30 +72,23 @@ function query_task(querySnapshot, taskList) {
         const current_date = Date.parse(new Date());
         const expired = parse_date < current_date;
 
-        if (expired) {
-            taskDiv.innerHTML = `
-                    <div class="bg-opacity-25 bg-secondary text-muted">
-                        <div class="card-body">
-                            <h3>${task.name}</h3>
-                            <p>${task.description}</p>
-                            <p>DUE: ${task.date}</p>
-                            <p class="text-danger">This task is overdue</p>
-                            ${render_importance_svg(task.importance)}
-                        </div>
-                    </div>
-                `;
-        } else {
-            taskDiv.innerHTML = `
-                    <a href="modify_tasks.html?id=${taskId}" class="stretched-link">
-                        <div class="card-body">
-                            <h3>${task.name}</h3>
-                            <p>${task.description}</p>
-                            <p>DUE: ${task.date}</p>
-                            ${render_importance_svg(task.importance)}
-                        </div>
-                    </a>
-                `;
-        }
+        taskDiv.innerHTML = `
+            <a href="modify_tasks.html?id=${taskId}" class="stretched-link"></a>
+            <div class="card-body">
+                <h3>${task.name}</h3>
+                <p>${task.description}</p>
+                <p>DUE: ${task.date}</p>
+                ${expired ? '<p class="text-danger">This task is overdue</p>' : ''}
+                ${render_importance_svg(task.importance)}
+            </div>
+            <button class="btn btn-success position-absolute top-50 end-0 translate-middle-y me-3 rounded-square" 
+                onclick="showConfirmation('${taskId}', this)" style="z-index: 2;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6L9 17l-5-5" />
+                </svg>
+            </button>
+        `;
 
         if (parse_date == current_date || (current_date <= parse_date + 30000 && current_date >= parse_date)) {
             const modal = new bootstrap.Modal(document.getElementById('messageModal'));
@@ -105,6 +98,49 @@ function query_task(querySnapshot, taskList) {
 
         taskList.appendChild(taskDiv);
     });
+}
+
+function showConfirmation(taskId, button) {
+    const taskCard = button.closest(".task-card");
+
+    // Add a semi-transparent overlay to disable background clicks
+    const overlay = document.createElement("div");
+    overlay.className = "confirmation-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center";
+    overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Semi-transparent background
+    overlay.style.zIndex = "3"; // Ensure it is above other elements
+
+    overlay.innerHTML = `
+        <div class="bg-white p-3 rounded shadow text-center" style="z-index: 4;">
+            <p>Are you sure you want to complete this task?</p>
+            <button class="btn btn-danger me-2" onclick="deleteTask('${taskId}', this)">Yes</button>
+            <button class="btn btn-secondary" onclick="cancelConfirmation(this)">No</button>
+        </div>
+    `;
+
+    taskCard.appendChild(overlay);
+    button.style.display = "none"; // Hide the original button
+}
+
+function cancelConfirmation(button) {
+    const overlay = button.closest(".confirmation-overlay");
+    const taskCard = overlay.closest(".task-card");
+    const completeButton = taskCard.querySelector(".btn-success");
+
+    overlay.remove(); // Remove the confirmation overlay
+    if (completeButton) {
+        completeButton.style.display = "block"; // Restore the original button
+    }
+}
+
+async function deleteTask(taskId, button) {
+    try {
+        await db.collection("tasks").doc(taskId).delete();
+        const taskCard = button.closest(".task-card");
+        taskCard.remove(); // Remove the task card from the DOM
+    } catch (error) {
+        console.error("Error deleting task: ", error);
+        alert("Failed to delete the task. Please try again.");
+    }
 }
 
 function render_importance_svg(importance) {
