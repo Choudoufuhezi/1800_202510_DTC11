@@ -72,23 +72,44 @@ function query_task(querySnapshot, taskList) {
         const current_date = Date.parse(new Date());
         const expired = parse_date < current_date;
 
-        taskDiv.innerHTML = `
-            <a href="modify_tasks.html?id=${taskId}" class="stretched-link"></a>
-            <div class="card-body">
-                <h3>${task.name}</h3>
-                <p>${task.description}</p>
-                <p>DUE: ${task.date}</p>
-                ${expired ? '<p class="text-danger">This task is overdue</p>' : ''}
-                ${render_importance_svg(task.importance)}
-            </div>
-            <button class="btn btn-success position-absolute top-50 end-0 translate-middle-y me-3 rounded-square" 
-                onclick="showConfirmation('${taskId}', this)" style="z-index: 2;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 6L9 17l-5-5" />
-                </svg>
-            </button>
-        `;
+        if (expired) {
+            taskDiv.innerHTML = `
+                    <div class="bg-opacity-25 bg-secondary text-muted">
+                        <div class="card-body">
+                            <h3>${task.name}</h3>
+                            <p>${task.description}</p>
+                            <p>DUE: ${task.date}</p>
+                            <p class="text-danger">This task is overdue</p>
+                            ${render_importance_svg(task.importance)}
+                        </div>
+                    </div>
+                    <button class="btn btn-success position-absolute top-50 end-0 translate-middle-y me-3 rounded-square"
+                        onclick="showConfirmation('${taskId}', this)" style="z-index: 2;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 6L9 17l-5-5" />
+                        </svg>
+                    </button> 
+                `;
+        } else {
+            taskDiv.innerHTML = `
+                    <a href="modify_tasks.html?id=${taskId}" class="stretched-link">
+                        <div class="card-body">
+                            <h3>${task.name}</h3>
+                            <p>${task.description}</p>
+                            <p>DUE: ${task.date}</p>
+                            ${render_importance_svg(task.importance)}
+                        </div>
+                    </a>
+                    <button class="btn btn-success position-absolute top-50 end-0 translate-middle-y me-3 rounded-square"
+                        onclick="showConfirmation('${taskId}', this)" style="z-index: 2;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 6L9 17l-5-5" />
+                        </svg>
+                    </button> 
+                `;
+        }
 
         if (parse_date == current_date || (current_date <= parse_date + 30000 && current_date >= parse_date)) {
             const modal = new bootstrap.Modal(document.getElementById('messageModal'));
