@@ -264,6 +264,14 @@ body.dark-mode .event {
 .confirmation-overlay .bg-white {
     z-index: 4;
     /* Ensure the confirmation box is above the overlay */
+    background-color: #ffffff; /* Default light mode background */
+    color: #000000; /* Default light mode text color */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .confirmation-overlay .bg-white {
+    background-color: #2a2a2a !important; /* Dark mode background */
+    color: #ffffff !important; /* Dark mode text color */
 }
 
 .confirmation-overlay button {
