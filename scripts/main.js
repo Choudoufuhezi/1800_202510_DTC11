@@ -74,15 +74,14 @@ function query_task(querySnapshot, taskList) {
 
         if (expired) {
             taskDiv.innerHTML = `
-                    <div class="bg-opacity-25 bg-secondary text-muted">
+                    <a href="modify_tasks.html?id=${taskId}" class="stretched-link">
                         <div class="card-body">
                             <h3>${task.name}</h3>
                             <p>${task.description}</p>
                             <p>DUE: ${task.date}</p>
-                            <p class="text-danger">This task is overdue</p>
                             ${render_importance_svg(task.importance)}
                         </div>
-                    </div>
+                    </a>
                     <button class="btn btn-success position-absolute top-50 end-0 translate-middle-y me-3 rounded-square"
                         onclick="showConfirmation('${taskId}', this)" style="z-index: 2;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
