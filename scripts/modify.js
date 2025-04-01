@@ -19,8 +19,18 @@ async function load_tasks(taskid) {
 
     if (taskdoc.exists) {
         const task = taskdoc.data();
-        document.getElementById("task_name_text").value = task.name || "";
-        document.getElementById("description_text").value = task.description || "";
+        const titleElement = document.getElementById("task-title");
+        const descriptionElement = document.getElementById("task-description");
+        const taskInfoContainer = document.getElementById("task_info");
+
+        // Display title and description as plain text
+        titleElement.innerHTML = `<span>${task.name || ""}</span>`;
+        descriptionElement.innerHTML = `<p>${task.description || ""}</p>`;
+
+        // Add a single "Edit" button at the bottom-right of the container
+        taskInfoContainer.innerHTML += `
+            <button class="btn btn-primary btn-sm position-absolute bottom-0 end-0 m-3" id="edit-task-button" onclick="editTask('${taskid}')">Edit</button>
+        `;
 
         // Load steps
         const stepsContainer = document.getElementById("steps-container");
@@ -172,5 +182,117 @@ function showAlert(message) {
 
 function return_to_main() {
     window.location.href = "main.html"
+}
+
+function editTask(taskid) {
+    const titleElement = document.getElementById("task-title");
+    const descriptionElement = document.getElementById("task-description");
+    const editButton = document.getElementById("edit-task-button");
+
+    // Replace title and description with editable inputs
+    const currentTitle = titleElement.querySelector("span").innerText;
+    const currentDescription = descriptionElement.querySelector("p").innerText;
+
+    titleElement.innerHTML = `
+        <input type="text" class="form-control" id="edit-title-input" value="${currentTitle}">
+    `;
+    descriptionElement.innerHTML = `
+        <textarea class="form-control" id="edit-description-textarea" rows="4">${currentDescription}</textarea>
+    `;
+
+    // Change the "Edit" button to a "Save" button
+    editButton.innerText = "Save";
+    editButton.onclick = () => saveTask(taskid);
+}
+
+async function saveTask(taskid) {
+    const titleInput = document.getElementById("edit-title-input");
+    const descriptionTextarea = document.getElementById("edit-description-textarea");
+    const editButton = document.getElementById("edit-task-button");
+
+    const newTitle = titleInput.value.trim();
+    const newDescription = descriptionTextarea.value.trim();
+
+    if (!newTitle || !newDescription) {
+        alert("Title and description cannot be empty.");
+        return;
+    }
+
+    const taskRef = db.collection("tasks").doc(taskid);
+    await taskRef.update({
+        name: newTitle,
+        description: newDescription
+    });
+
+    // Revert to plain text display
+    const titleElement = document.getElementById("task-title");
+    const descriptionElement = document.getElementById("task-description");
+
+    titleElement.innerHTML = `<span>${newTitle}</span>`;
+    descriptionElement.innerHTML = `<p>${newDescription}</p>`;
+
+    // Change the "Save" button back to an "Edit" button
+    editButton.innerText = "Edit";
+    editButton.onclick = () => editTask(taskid);
+
+    showAlert("Changes to the task have been successfully saved");
+}
+
+function editTitle(taskid) {
+    const titleElement = document.getElementById("task-title");
+    const currentTitle = titleElement.querySelector("span").innerText;
+
+    // Replace title with an input box and a save button
+    titleElement.innerHTML = `
+        <input type="text" class="form-control" id="edit-title-input" value="${currentTitle}">
+        <button class="btn btn-success btn-sm ms-2" onclick="saveTitle('${taskid}')">Save</button>
+    `;
+}
+
+async function saveTitle(taskid) {
+    const titleInput = document.getElementById("edit-title-input");
+    const newTitle = titleInput.value.trim();
+
+    if (!newTitle) {
+        alert("Title cannot be empty.");
+        return;
+    }
+
+    const taskRef = db.collection("tasks").doc(taskid);
+    await taskRef.update({ name: newTitle });
+
+    // Revert to plain text display
+    const titleElement = document.getElementById("task-title");
+    titleElement.innerHTML = `<span>${newTitle}</span>`;
+    titleElement.innerHTML += `<button class="btn btn-primary btn-sm ms-2" onclick="editTitle('${taskid}')">Edit</button>`;
+}
+
+function editDescription(taskid) {
+    const descriptionElement = document.getElementById("task-description");
+    const currentDescription = descriptionElement.querySelector("p").innerText;
+
+    // Replace description with a text area and a save button
+    descriptionElement.innerHTML = `
+        <textarea class="form-control" id="edit-description-textarea" rows="4">${currentDescription}</textarea>
+        <button class="btn btn-success btn-sm mt-2" onclick="saveDescription('${taskid}')">Save</button>
+    `;
+}
+
+async function saveDescription(taskid) {
+    const descriptionTextarea = document.getElementById("edit-description-textarea");
+    const newDescription = descriptionTextarea.value.trim();
+
+    if (!newDescription) {
+        alert("Description cannot be empty.");
+        return;
+    }
+
+    const taskRef = db.collection("tasks").doc(taskid);
+    await taskRef.update({ description: newDescription });
+
+    // Revert to plain text display
+    const descriptionElement = document.getElementById("task-description");
+    descriptionElement.innerHTML = `<p>${newDescription}</p>`;
+    descriptionElement.innerHTML += `<button class="btn btn-primary btn-sm ms-2" onclick="editDescription('${taskid}')">Edit</button>`;
 }
 

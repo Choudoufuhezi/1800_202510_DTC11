@@ -24,28 +24,34 @@ async function writeTasks(taskname, desc, taskdate, task_importance) {
     });
 }
 
+let selectedImportance = null;
+
+document.querySelectorAll(".bookmark").forEach(bookmark => {
+    bookmark.addEventListener("click", function () {
+        // Unfill all bookmarks (set to outlined state)
+        document.querySelectorAll(".bookmark").forEach(b => {
+            b.setAttribute("fill", "none"); // Reset fill to none
+        });
+
+        // Fill the clicked bookmark and set it as selected
+        selectedImportance = this.getAttribute("data-value");
+        this.setAttribute("fill", this.getAttribute("stroke")); // Use the stroke color as the fill color
+    });
+});
+
 document.getElementById('submit').addEventListener('click', async function () {
     const title = document.getElementById("tasktitle").value;
     const desc = document.getElementById("taskdesc").value;
     const date = document.getElementById("taskdate").value;
-    const importance = document.getElementsByClassName("taskimportance")
 
-    let task_importance = null
-    for (radio of importance) {
-        if (radio.checked) {
-            task_importance = radio.value
-        }
-    }
-
-    if (!title || !desc || !date || !task_importance) {
+    if (!title || !desc || !date || !selectedImportance) {
         alert("Please fill in all fields before submitting.");
         return;
     }
 
-    await writeTasks(title, desc, date, task_importance);
+    await writeTasks(title, desc, date, selectedImportance);
     showAlert("Task has been successfully added");
 });
-
 
 function showAlert(message) {
     const modal = new bootstrap.Modal(document.getElementById('messageModal'));

@@ -72,43 +72,23 @@ function query_task(querySnapshot, taskList) {
         const current_date = Date.parse(new Date());
         const expired = parse_date < current_date;
 
-        if (expired) {
-            taskDiv.innerHTML = `
-                    <a href="modify_tasks.html?id=${taskId}" class="bg-opacity-25 bg-secondary text-muted">
-                        <div class="card-body">
-                            <h3>${task.name}</h3>
-                            <p>${task.description}</p>
-                            <p>DUE: ${task.date}</p>
-                            ${render_importance_svg(task.importance)}
-                        </div>
-                    </a>
-                    <button class="btn btn-success position-absolute top-50 end-0 translate-middle-y me-3 rounded-square"
-                        onclick="showConfirmation('${taskId}', this)" style="z-index: 2;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 6L9 17l-5-5" />
-                        </svg>
-                    </button> 
-                `;
-        } else {
-            taskDiv.innerHTML = `
-                    <a href="modify_tasks.html?id=${taskId}" class="stretched-link">
-                        <div class="card-body">
-                            <h3>${task.name}</h3>
-                            <p>${task.description}</p>
-                            <p>DUE: ${task.date}</p>
-                            ${render_importance_svg(task.importance)}
-                        </div>
-                    </a>
-                    <button class="btn btn-success position-absolute top-50 end-0 translate-middle-y me-3 rounded-square"
-                        onclick="showConfirmation('${taskId}', this)" style="z-index: 2;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 6L9 17l-5-5" />
-                        </svg>
-                    </button> 
-                `;
-        }
+        taskDiv.innerHTML = `
+            <a href="modify_tasks.html?id=${taskId}" class="stretched-link"></a>
+            <div class="card-body">
+                <h3>${task.name}</h3>
+                <p>${task.description}</p>
+                <p>DUE: ${task.date}</p>
+                ${expired ? '<p class="text-danger">This task is overdue</p>' : ''}
+                ${render_importance_svg(task.importance)}
+            </div>
+            <button class="btn btn-success position-absolute bottom-0 end-0 m-3 rounded-square" 
+                onclick="showConfirmation('${taskId}', this)" style="z-index: 2;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6L9 17l-5-5" />
+                </svg>
+            </button>
+        `;
 
         if (parse_date == current_date || (current_date <= parse_date + 30000 && current_date >= parse_date)) {
             const modal = new bootstrap.Modal(document.getElementById('messageModal'));
@@ -165,11 +145,9 @@ async function deleteTask(taskId, button) {
 
 function render_importance_svg(importance) {
     const importanceColors = {
-        1: "#94d82d",
-        2: "#1952fc",
-        3: "#f1fc19",
-        4: "#fcc419",
-        5: "#f50000"
+        1: "#94d82d", // Green
+        3: "#f1fc19", // Yellow
+        5: "#f50000"  // Red
     };
     const color = importanceColors[importance] || "#94d82d";
 
@@ -177,14 +155,8 @@ function render_importance_svg(importance) {
         <svg xmlns="http://www.w3.org/2000/svg" 
              width="50" height="50" 
              viewBox="0 0 256 256"
-             aria-hidden="true">
-            <g fill="${color}" fill-rule="nonzero" stroke="none" 
-               stroke-width="1" stroke-linecap="butt"
-               stroke-linejoin="miter" stroke-miterlimit="10">
-                <g transform="scale(8,8)">
-                    <path d="M7,5v23l1.59375,-1.1875l7.40625,-5.5625l7.40625,5.5625l1.59375,1.1875v-23zM9,7h14v17l-6.40625,-4.8125l-0.59375,-0.4375l-0.59375,0.4375l-6.40625,4.8125z"/>
-                </g>
-            </g>
+             fill="${color}">
+            <path d="M48 40v168l80-60 80 60V40z"></path>
         </svg>
     `;
 }

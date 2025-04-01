@@ -75,6 +75,7 @@ body.dark-mode .task-card:hover {
     /* Default light mode background */
 }
 
+/* Default dark mode background */
 body.dark-mode .settings-container,
 body.dark-mode .calendar {
     background-color: #121212 !important;
@@ -141,14 +142,15 @@ button.rounded-square svg {
     /* Prevent interference with button click */
 }
 
+/* Remove dark mode-specific overrides for the checkmark button */
 body.dark-mode button.rounded-square {
-    background-color: #1e7e34;
-    /* Darker green for dark mode */
+    background-color: #28a745 !important;
+    /* Same green background as light mode */
 }
 
 body.dark-mode button.rounded-square:hover {
-    background-color: #155724;
-    /* Even darker green on hover in dark mode */
+    background-color: #218838 !important;
+    /* Same hover effect as light mode */
 }
 
 footer {
@@ -264,17 +266,46 @@ body.dark-mode .event {
 .confirmation-overlay .bg-white {
     z-index: 4;
     /* Ensure the confirmation box is above the overlay */
-    background-color: #ffffff; /* Default light mode background */
-    color: #000000; /* Default light mode text color */
+    background-color: #ffffff;
+    /* Default light mode background */
+    color: #000000;
+    /* Default light mode text color */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body.dark-mode .confirmation-overlay .bg-white {
-    background-color: #2a2a2a !important; /* Dark mode background */
-    color: #ffffff !important; /* Dark mode text color */
+    background-color: #2a2a2a !important;
+    /* Dark mode background */
+    color: #ffffff !important;
+    /* Dark mode text color */
 }
 
 .confirmation-overlay button {
     z-index: 5;
     /* Ensure buttons are fully clickable */
+}
+
+body.dark-mode textarea {
+    background-color: #333333 !important;
+    /* Dark mode background for text area */
+    color: #ffffff !important;
+    /* Dark mode text color */
+    border-color: #555555 !important;
+    /* Dark mode border color */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-mode textarea::placeholder {
+    color: #aaaaaa !important;
+    /* Placeholder text color in dark mode */
+}
+
+/* Placeholder text color in dark mode */
+body.dark-mode input::placeholder {
+    color: #aaaaaa !important;
+}
+
+/* Calendar icon in the date selector for dark mode */
+body.dark-mode input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }
