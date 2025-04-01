@@ -145,9 +145,6 @@ async function deleteTask(taskId, button) {
 
 function render_importance_svg(importance) {
     const importanceColors = {
-        1: "#94d82d",
-        3: "#f1fc19",
-        5: "#f50000"
         1: "#94d82d", // Green
         3: "#f1fc19", // Yellow
         5: "#f50000"  // Red
