@@ -36,9 +36,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                 taskDate.getFullYear() === currentYear
                             );
                         })
-                        .map(task => `<a href="modify_tasks.html?id=${task.id}" class="task-link">
-            <div class="event">${task.name}<br>${task.date}</div>
-        </a>`)
+                        .map(task => {
+                            const taskDate = new Date(task.date);
+                            const time = taskDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                            return `<a href="modify_tasks.html?id=${task.id}" class="task-link">
+                                <div class="event">${task.name}<br>${time}</div>
+                            </a>`;
+                        })
                         .join("");
 
                     calendarHTML += `<td>${dayCounter}${taskHTML}</td>`;
