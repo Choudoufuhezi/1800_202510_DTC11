@@ -1,14 +1,13 @@
 
-# Project Name
+# Tracky
 
 ## Overview
 Summarize your project's purpose, problem solved, key features, user benefits, development context, and main technologies used.
 
 Example:
+The Tracky web app helps you manage your tasks and deadlines. It allows you to create and modify tasks, stored on a database, view those tasks in either a calendar or todo list formate, and mark them as done once you are finished with them.
 
-This client-side JavaScript web application provides real-time weather updates for cities worldwide. It simplifies accessing weather information through an intuitive mobile-first interface, allowing users to input a city name and receive data on temperature, humidity, and conditions.
-
-Developed for the [Course Name] course, applying User-Centred Design practices, agile project management processes, integrating a weather API, and Firebase backend services.
+Deveolped for Comp 1800, we used user-centered design practices, firebase backend services, and agile project management processes.
 
 ---
 
@@ -33,25 +32,58 @@ Example:
 
 ## Usage
 
-Example:
-1. Open your browser and visit `http://localhost:3000`.
-2. Enter the name of the city in the search bar and press enter.
-3. View the weather information displayed on the screen.
-
+1. Open your browser and visit:
+2. Login/create an account
+3. Add a task
+4. View them in the default view or the calendar view
+5. Mark them as complete when done.
+   
 ---
 
 ## Project Structure
 
 Example:
 ```
-project-name/
-├── src/
-│   ├── index.html
-│   ├── style.css
-│   ├── app.js
-│   └── components/
-├── package.json
+1800_202510_dtc/
+├── images/
+│   ├── AM01.jpg
+│   ├── BBY01.jpg
+│   ├── NV01.jpg
+│   ├── drink1.jpg
+│   ├── drink2.jpg
+│   ├── drink3.jpg
+│   ├── elmo.jpg
+│   ├── hike1.jpg
+│   ├── hike2.jpg
+│   ├── hike3.jpg
+│   ├── logo.jpg
+│   └── tracky_logo.jpg/
+├── scripts/
+│   ├── add_task.js
+│   ├── authentication.js
+│   ├── firebaseAPI_config.js
+│   ├── global.js
+│   ├── javascript.js
+│   ├── load_task.js
+│   ├── main.js
+│   ├── modify.js
+│   ├── profile.js
+│   ├── scripts.js
+│   ├── settings.js
+│   └── skeleton.js/
+├── styles/
+│   ├── dark-mode.css
+│   ├── style.css/
 ├── README.md
+├── calender.html
+├── createtask.html
+├── html.html
+├── index.html
+├── login.html
+├── main.html
+├── modify_tasks.html
+├── profile.html
+├── setting.html
 └── .gitignore
 ```
 

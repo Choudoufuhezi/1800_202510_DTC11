@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
     const calendarElement = document.getElementById("calendar");
     const monthYearElement = document.getElementById("month-year");
+    let currentDate = new Date();
 
     // Function to generate the calendar
     function generateCalendar(tasks) {
-        const now = new Date();
-        const currentMonth = now.getMonth();
-        const currentYear = now.getFullYear();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
 
 
-        monthYearElement.textContent = `${now.toLocaleString("default", { month: "long" })} ${currentYear}`;
+        monthYearElement.textContent = `${currentDate.toLocaleString("default", { month: "long" })} ${currentYear}`;
 
         const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
         const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -36,9 +36,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                 taskDate.getFullYear() === currentYear
                             );
                         })
-                        .map(task => `<a href="modify_tasks.html?id=${task.id}" class="task-link">
-            <div class="event">${task.name}<br>${task.date}</div>
-        </a>`)
+                        .map(task => {
+                            const taskDate = new Date(task.date);
+                            const time = taskDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                            return `<a href="modify_tasks.html?id=${task.id}" class="task-link">
+                                <div class="event">${task.name}<br>${time}</div>
+                            </a>`;
+                        })
                         .join("");
 
                     calendarHTML += `<td>${dayCounter}${taskHTML}</td>`;
@@ -55,6 +59,27 @@ document.addEventListener("DOMContentLoaded", function () {
             document.body.classList.add("dark-mode");
         }
     }
+
+    function updateCalendar(direction) {
+        currentDate.setMonth(currentDate.getMonth() + direction);
+        firebase.auth().onAuthStateChanged(user => {
+            if (!user) return;
+            db.collection("tasks")
+                .where("uid", "==", user.uid)
+                .get()
+                .then(querySnapshot => {
+                    const tasks = querySnapshot.docs.map(doc => {
+                        const task = doc.data();
+                        task.id = doc.id;
+                        return task;
+                    });
+                    generateCalendar(tasks);
+                });
+        });
+    }
+
+    document.getElementById("next-month").addEventListener("click", () => updateCalendar(1));
+    document.getElementById("prev-month").addEventListener("click", () => updateCalendar(-1));
 
     // Fetch tasks from Firestore and generate the calendar
     firebase.auth().onAuthStateChanged(user => {
