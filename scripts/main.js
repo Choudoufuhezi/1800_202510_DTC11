@@ -72,6 +72,11 @@ function query_task(querySnapshot, taskList) {
         const current_date = Date.parse(new Date());
         const expired = parse_date < current_date;
 
+        // Apply grayed-out style if the task is overdue
+        if (expired) {
+            taskDiv.style.opacity = "0.5"; // Make the task appear grayed out
+        }
+
         taskDiv.innerHTML = `
             <a href="modify_tasks.html?id=${taskId}" class="stretched-link"></a>
             <div class="card-body">
